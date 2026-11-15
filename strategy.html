@@ -5,25 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NoorMinds - Strategy</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; line-height: 1.6; color: #222; background: #f8f9fa; }
-    header { text-align: center; padding: 24px 0 16px; }
-    header h1 { margin: 0; font-size: 3em; }
-    header p { margin: 6px 0 0; font-size: 1.5em; }
-    nav { width: 100%; border-top: 2px solid #222; border-bottom: 2px solid #222; padding: 12px 0; margin-bottom: 30px; display: flex; justify-content: space-evenly; align-items: center; }
-    nav a { color: #222; text-decoration: none; font-weight: bold; padding: 2px 4px; }
-    nav a:hover { text-decoration: underline; }
-    nav a.current { border-bottom: 3px solid #1a4fa0; }
-    .box { border: 1px solid #222; background: white; padding: 14px 20px; max-width: 860px; margin: 0 auto 20px; }
-    .box h2 { margin-top: 0; font-size: 1.2em; }
-    .note { color: #777; font-style: italic; }
-    footer { border-top: 2px solid #222; display: flex; justify-content: space-between; padding: 14px 20px 24px; margin: 30px 0 0; width: 100%; box-sizing: border-box; font-size: 0.9em; color: #222; }
+    :root { --bg: #070d1f; --cyan: #4fd8e8; --pink: #ff6b9d; --text: #e6ecff; --muted: #9fb0d6; --line: rgba(79, 216, 232, 0.35); }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body { margin: 0; min-height: 100vh; font-family: "Inter", "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--text); line-height: 1.65; background-color: var(--bg); background-image: linear-gradient(rgba(90, 150, 255, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(90, 150, 255, 0.07) 1px, transparent 1px), radial-gradient(ellipse at 85% 0%, rgba(40, 90, 170, 0.5), transparent 55%), radial-gradient(ellipse at 0% 100%, rgba(30, 120, 140, 0.35), transparent 50%); background-size: 64px 64px, 64px 64px, 100% 100%, 100% 100%; }
+    header { padding: 36px 20px 30px; display: flex; justify-content: center; }
+    .brand { display: flex; align-items: center; gap: 16px; }
+    .logo { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--cyan); border-radius: 14px; color: var(--cyan); font-size: 1.8rem; font-weight: 800; box-shadow: 0 0 24px rgba(79, 216, 232, 0.25); }
+    header h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; }
+    header h1 span { color: var(--cyan); }
+    header p { margin: 4px 0 0; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem; font-weight: 600; }
+    nav { position: sticky; top: 0; z-index: 10; width: 100%; display: flex; justify-content: space-evenly; align-items: center; flex-wrap: wrap; gap: 6px; padding: 12px 10px; background: rgba(7, 13, 31, 0.88); backdrop-filter: blur(10px); border-top: 2px solid var(--line); border-bottom: 2px solid var(--line); }
+    nav a { color: var(--text); text-decoration: none; font-weight: 700; padding: 8px 22px; border-radius: 999px; transition: background 0.15s, color 0.15s; }
+    nav a:hover { background: rgba(79, 216, 232, 0.12); color: var(--cyan); }
+    nav a.current { background: var(--cyan); color: #06101f; }
+    main { max-width: 1040px; margin: 44px auto; padding: 0 20px; }
+    .box { background: linear-gradient(160deg, rgba(22, 42, 88, 0.7), rgba(10, 20, 45, 0.7)); border: 1.5px solid var(--line); border-radius: 16px; padding: 26px 30px; margin-bottom: 28px; backdrop-filter: blur(6px); }
+    .box h2 { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; font-size: 1.35rem; color: #fff; }
+    .box h2::before { content: ""; flex: none; width: 11px; height: 11px; background: var(--pink); transform: rotate(45deg); }
+    .box p { margin: 0 0 10px; color: var(--text); }
+    .box p:last-child { margin-bottom: 0; }
+    .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 30px; align-items: center; margin-bottom: 44px; }
+    .pill { display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border: 1.5px solid var(--line); border-radius: 999px; background: rgba(79, 216, 232, 0.06); color: var(--cyan); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; }
+    .pill::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--cyan); }
+    .headline { margin: 22px 0 18px; font-size: clamp(3rem, 8vw, 5.4rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: #fff; }
+    .headline span { display: block; color: var(--cyan); }
+    .lead { margin: 0 0 24px; font-size: 1.2rem; color: var(--muted); max-width: 520px; }
+    .lead strong { color: #fff; }
+    .callout { border-left: 3px solid var(--pink); padding: 2px 0 2px 22px; margin: 0 0 26px; max-width: 520px; }
+    .callout h3 { margin: 0 0 4px; color: var(--pink); font-size: 1.05rem; }
+    .callout p { margin: 0; color: var(--text); }
+    .chips { display: flex; flex-wrap: wrap; gap: 12px; }
+    .chip { padding: 10px 16px; border: 1.5px solid var(--line); border-radius: 10px; background: rgba(20, 38, 80, 0.6); font-weight: 600; font-size: 0.95rem; }
+    .art { display: flex; justify-content: center; }
+    .art svg { width: 100%; max-width: 420px; height: auto; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .card { background: rgba(79, 216, 232, 0.05); border: 1.5px solid var(--line); border-radius: 14px; padding: 18px 20px; transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s; }
+    .card:hover { transform: translateY(-4px); border-color: var(--cyan); box-shadow: 0 8px 28px rgba(79, 216, 232, 0.15); }
+    .card h3 { margin: 0 0 6px; font-size: 1.1rem; color: #fff; }
+    .card p { margin: 0 0 6px; font-size: 0.95rem; color: var(--muted); }
+    .stat strong { display: block; margin-bottom: 2px; font-size: 1.3rem; color: var(--cyan); }
+    .stat { color: var(--muted); }
+    .avatar, .num { display: flex; align-items: center; justify-content: center; width: 54px; height: 54px; margin-bottom: 12px; font-weight: 800; font-size: 1.35rem; color: #06101f; }
+    .avatar { border-radius: 50%; background: linear-gradient(135deg, var(--cyan), #3b6fe0); }
+    .num { border-radius: 12px; background: var(--pink); }
+    .label { font-weight: 700; color: var(--cyan); }
+    .checks { list-style: none; margin: 0; padding: 0; }
+    .checks li { position: relative; padding: 6px 0 6px 36px; }
+    .checks li::before { content: "\2713"; position: absolute; left: 0; top: 7px; width: 22px; height: 22px; border-radius: 50%; background: var(--cyan); color: #06101f; font-size: 0.8rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+    .note { color: var(--muted); font-style: italic; }
+    .placeholder { display: flex; align-items: center; justify-content: center; min-height: 240px; padding: 20px; text-align: center; border: 2px dashed rgba(79, 216, 232, 0.5); border-radius: 12px; background: rgba(79, 216, 232, 0.05); color: var(--muted); font-style: italic; }
+    .empty { text-align: center; padding: 60px 28px; }
+    .empty p { font-size: 1.3rem; font-weight: 600; }
+    footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 22px 28px; margin-top: 56px; width: 100%; background: rgba(7, 13, 31, 0.9); border-top: 2px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+    @media (max-width: 800px) { .hero { grid-template-columns: 1fr; } .art { order: -1; } .art svg { max-width: 300px; } }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>NoorMinds</h1>
-  <p>FTC Robotics Team</p>
+  <div class="brand">
+    <div class="logo">N</div>
+    <div>
+      <h1>Noor<span>Minds</span></h1>
+      <p>FTC Robotics Team</p>
+    </div>
+  </div>
 </header>
 
 <nav>
@@ -34,10 +81,20 @@
   <a href="reach-out.html">Reach Out</a>
 </nav>
 
-<div class="box">
+<main>
+
+<section class="box">
   <h2>Game Strategy</h2>
-  <p class="note">Nothing here. Please check back later.</p>
-</div>
+  <p class="note">[Write our plan for the game here]</p>
+</section>
+
+<section class="grid">
+  <div class="card"><div class="num">1</div><h3>Autonomous</h3><p>[what the robot does on its own]</p></div>
+  <div class="card"><div class="num">2</div><h3>Driver-controlled</h3><p>[what we score]</p></div>
+  <div class="card"><div class="num">3</div><h3>End game</h3><p>[final tasks]</p></div>
+</section>
+
+</main>
 
 <footer><span>NoorMinds FTC Robotics Team</span><span>&copy; 2026 NoorMinds</span></footer>
 
